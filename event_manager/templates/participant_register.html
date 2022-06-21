@@ -1,0 +1,155 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+  
+    {% block title %}
+    <title>Participant Registration</title>
+    {% endblock title%} 
+
+
+    {% block content %}
+    <link href={% static 'style.css' %} rel="stylesheet">
+
+
+
+    {% comment %} <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column"> {% endcomment %}
+        {% comment %} <header class="mb-auto"> {% endcomment %}
+       
+    <nav class="nav nav-masthead justify-content-center float-md-end">
+    <a class="nav-link active" aria-current="page" href="/">Home</a>
+    {% comment %} <a class="nav-link" href="#">Features</a>
+    <a class="nav-link" href="#">Contact</a> {% endcomment %}
+    </nav>
+    <br>
+            
+        {% comment %} </header> {% endcomment %}
+      
+        {% comment %} <main class="px-3"> {% endcomment %}
+
+            {% comment %}  {% endcomment %}
+
+                <div class="extras-box" style="margin-bottom: 20px;">
+                    {% for event in show_events%}
+                    <div>
+                        <h4> 
+                            <b>{{event.name}} </b>                                
+                        </h4>
+                        <p> <b>Event ID: </b>{{event.id}}</p>
+                        <p> <b>Description: </b> {{event.description}} </p>
+                        <p> <b>Date(s): </b>{{event.start_date}} <b> - </b>{{event.end_date}}</p>        
+                        <p> <b>Registration Deadline: </b>{{event.register_deadline}} </p>
+                        <hr>            
+                    </div>
+                    {% endfor %}
+                </div>
+
+                <div class="form-box">
+                    <h1>Participant Registration</h1>
+                    {% if messages %}
+                    <ul class="messages">            
+                        <li>{{ messages }}</li>        
+                                                    {% comment %} context is written in {{..here..}} {% endcomment %}
+                        
+                    </ul>
+                    {% endif %}
+        
+                    {% if done %}
+                    <ul class="done" style="color: #05cd43;">            
+                        <li>{{ done }}</li>            
+                    </ul>
+                    {% endif %}
+        
+                    <form action="/participant_register" method="post">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label for="participant_name">Participant Name</label>
+                            <input type="text" class="form-control" name="participant_name" id="participant_name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="contact_no">Contact No</label>
+                            <input type="text" class="form-control" name="contact_no" id="contact_no" maxlength="10" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="participant_email">Email</label>
+                            <input type="email" class="form-control" name="participant_email" id="participant_email" required>
+                        </div>
+
+                        <div class="form-group">
+                            <p>Choose Event</p>                
+                            {% for event in show_events %}                    
+                            <div class="inline-input" >
+                                <label for="{{event.name}}">{{event.name}}</label>
+                                <input type="radio" id={{event.name}} name="event_name"  value="{{event.name}}">                    
+                            </div>
+                            {% endfor %}                
+                        </div>
+                       
+
+
+
+                        <div class="form-group">
+                            <p>Registration Type</p>
+
+                            {% comment %} <select class="form-select" id="participant.registration_type" aria-label="Floating label select example">
+                                <option selected>Choose</option>
+                                <option value="Individual">Individual</option>
+                                <option value="Group">Group</option>
+                            </select> {% endcomment %}
+                            
+                            {% comment %} {% if participant.registration_type == 'GROUP'%}
+                            <div class="form-group line-form-group" id="number-ppl">
+                                <label for="no_of_people">No of People</label>
+                                <input type="number" class="form-control" name="no_of_people" id="no_of_people" value="1" min="1">
+                            </div>
+                            {%endif%} {% endcomment %}
+
+                            <div class="inline-input">
+                                <label for="Individual">Individual</label>
+                                <input onclick="hide_num_of_ppl()" type="radio" id="Individual" name="registration_type" value="Individual">
+                            </div>
+                            <div class="inline-input">
+                                <label for="Group">Group</label>
+                                <input onclick="show_num_of_ppl()" type="radio" id="Group" name="registration_type" value="Group">
+                            </div>
+                            
+                        </div>
+                        <div class="form-group">
+                            <label for="num_of_ppl">No. of Participants <br>(1 by default. Change only available for Group Participation)</label>
+                            <input type="number" class="form-control" name="num_of_ppl" id="num_of_ppl" value="1" min="1">
+                            
+                        </div>                         
+                        <div class="form-group submit-btn">                
+                            <button type="submit" class="btn btn-primary">Submit</button>      
+                        </div>                   
+                        
+                    </form>
+                    
+              
+                </div>
+                
+            
+            
+          
+        {% comment %} </main> {% endcomment %}
+      
+        <footer class="mt-auto text-white-50">
+          <p> </p>
+        </footer>
+    </div>
+
+
+
+<script>
+    function hide_num_of_ppl() {            
+        document.getElementById("num_of_ppl").style.display = "none";
+    }
+    function show_num_of_ppl() {   
+        document.getElementById("num_of_ppl").style.display = "block";  
+        
+    }
+</script>
+   
+    
+    {% endblock content %}
+

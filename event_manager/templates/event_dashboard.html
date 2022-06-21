@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+  
+    {% block title %}
+    <title>Events Dashboard</title>
+    {% endblock title%} 
+
+
+    {% block content %}
+    <link href={% static 'style.css' %} rel="stylesheet">
+
+
+
+    {% comment %} <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column"> {% endcomment %}
+        {% comment %} <header class="mb-auto"> {% endcomment %}
+       
+    <nav class="nav nav-masthead justify-content-center float-md-end">
+    <a class="nav-link active" aria-current="page" href="/">Home</a>
+    {% comment %} <a class="nav-link" href="#">Features</a>
+    <a class="nav-link" href="#">Contact</a> {% endcomment %}
+    </nav>
+    <br>
+            
+        {% comment %} </header> {% endcomment %}
+      
+        {% comment %} <main class="px-3"> {% endcomment %}
+
+            {% comment %}  {% endcomment %}
+            
+
+
+                <div class="form-box">
+                    <h1>Events Dashboard</h1>
+                    {% if messages %}
+                    <ul class="messages">            
+                        <li>{{ messages }}</li>        
+                                                    {% comment %} context is written in {{..here..}} {% endcomment %}
+                        
+                    </ul>
+                    {% endif %}
+        
+                    <form action="/event_dashboard" method="post">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label for="event_id">Event ID</label>
+                            <input type="number" class="form-control" name="event_id" id="event_id" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            <input type="password" class="form-control" name="password" id="password" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="host_email">Host email</label>    
+                            <input type="email" class="form-control" name="host_email" id="host_email" required>            
+                        </div> 
+                        <div class="form-group submit-btn">                
+                            <button type="submit" class="btn btn-primary">Submit</button>      
+                        </div>                   
+                        
+                    </form>
+                    
+                    {% if participants_list%}
+
+                {%for participant in participants_list%}
+                <div class="extras-box" style="margin-bottom: 15px;">
+                    
+                    <div>
+                        <h4> 
+                            <b>{{participant.name}} </b>                                
+                        </h4>
+                        <p> <b>Participant ID: </b>{{participant.id}}</p>
+                        <p> <b>Contact Number: </b> {{participant.contact_no}} </p>
+                        <p> <b>Email: </b>{{participant.participant_email}}</p>        
+                        <p> <b>Registration Type: </b>{{participant.registration_type}} </p>
+                        <p> <b>Number of participants: </b>{{participant.num_of_ppl}} </p>
+
+                        <hr>            
+                    </div>
+                    
+                </div>
+                {% endfor %}
+            {% endif %}
+              
+                </div>
+
+                {% comment %} if the id and password match, then show the  {% endcomment %}
+                
+            
+            
+          
+        {% comment %} </main> {% endcomment %}
+      
+        <footer class="mt-auto text-white-50">
+          <p> </p>
+        </footer>
+    </div>
+   
+    
+    {% endblock content %}
+

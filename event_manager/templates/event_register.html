@@ -1,0 +1,109 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+  
+    {% block title %}
+    <title>Event Registration</title>
+    {% endblock title%} 
+
+
+    {% block content %}
+    <link href={% static 'style.css' %} rel="stylesheet">
+
+
+
+    {% comment %} <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column"> {% endcomment %}
+        {% comment %} <header class="mb-auto"> {% endcomment %}
+       
+    <nav class="nav nav-masthead justify-content-center float-md-end">
+    <a class="nav-link active" aria-current="page" href="/">Home</a>
+    {% comment %} <a class="nav-link" href="#">Features</a>
+    <a class="nav-link" href="#">Contact</a> {% endcomment %}
+    </nav>
+    <br>
+            {% comment %} {% include templates/navbar.html %} {% endcomment %}
+         
+        {% comment %} </header> {% endcomment %}
+      
+        {% comment %} <main class="px-3"> {% endcomment %}
+
+            {% comment %} <div class="box"> {% endcomment %}
+                <div class="form-box">
+                    <h1>Event Registration</h1>
+                    {% if messages %}
+                    <ul class="messages">            
+                        <li>{{ messages }}</li>        
+                                                    {% comment %} context is written in {{..here..}} {% endcomment %}
+                        
+                    </ul>
+                    {% endif %}
+        
+                    {% if done %}
+                    <ul class="done" style="color: #05cd43;">            
+                        <li>{{ done }}</li>            
+                    </ul>
+                    {% endif %}
+        
+                    <form action="/event_register" method="post">
+        
+                        {% csrf_token %}
+        
+                        <div class="form-group">
+                            <label for="name">Event Name</label>
+                            <input type="text" class="form-control" name="name" id="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="description">Description</label>
+                            <input type="text" class="form-control" name="description" id="description" required>
+                        </div>
+                        <div class="form-group line-form-group">
+                            <label for="poster_link">Poster Link</label>    
+                            <input type="url" class="form-control" name="poster_link" id="poster_link">            
+                        </div>            
+                        <div class="form-group">
+                            <label for="start_date">Start</label>    
+                            <input type="datetime-local" class="form-control" name="start_date" id="start_date" required>            
+                        </div>            
+                        <div class="form-group">
+                            <label for="end_date">End</label>    
+                            <input type="datetime-local" class="form-control" name="end_date" id="end_date" required>            
+                        </div>            
+                        <div class="form-group line-form-group" >
+                            <label for="register_deadline">Deadline</label>    
+                            <input type="datetime-local" class="form-control" name="register_deadline" id="register_deadline" required>            
+                        </div>            
+                        <div class="form-group">
+                            <label for="host_email">Host email</label>    
+                            <input type="email" class="form-control" name="host_email" id="host_email" required>            
+                        </div>            
+                        <div class="form-group">
+                            <label for="password">Event Password</label>    
+                            <input type="password" class="form-control" name="password" id="password" required>                 
+                        </div>
+                        <div class="form-group submit-btn">                
+                            <button type="submit" class="btn btn-primary">Submit</button>      
+                        </div>
+                        
+                    </form>
+                    
+              
+                </div>
+                
+            {% comment %} </div> {% endcomment %}
+            
+          
+        {% comment %} </main> {% endcomment %}
+      
+        <footer class="mt-auto text-white-50">
+          <p> </p>
+        </footer>
+    </div>
+
+
+
+
+   
+    
+    {% endblock content %}
+
